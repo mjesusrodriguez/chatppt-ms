@@ -1,0 +1,45 @@
+# Entornos virtuales
+venv/
+env/
+.venv/
+
+# Archivos de Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de configuración sensibles
+.env
+*.env
+
+# Archivos de logs
+*.log
+
+# Archivos de bases de datos locales
+*.sqlite3
+*.db
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de Spyder / Jupyter
+.ipynb_checkpoints
+.spyderproject
+.spyproject
+
+# Modelos locales
+models/
+tagfilter_service/models/
+!tagfilter_service/models/__init__.py
+
+# Docker
+*.pid
+*.tar
+*.img
+
+# VSCode
+.vscode/
+
+# Archivos de pruebas temporales
+tests/__pycache__/

@@ -1,0 +1,144 @@
+version: '3.8'
+
+x-defaults:
+  &default-service
+  restart: always
+  networks:
+    - chatbot_network
+  depends_on:
+    - mongodb
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - chatbot_network
+
+  gateway_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: gateway_service/Dockerfile
+    container_name: gateway_service
+    ports:
+      - "5012:5000"
+    env_file:
+      - gateway_service/.env
+
+  domain_manager_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: domain_manager_service/Dockerfile
+    container_name: domain_manager_service
+    ports:
+      - "5002:5000"
+    env_file:
+      - domain_manager_service/.env
+
+  intent_rec_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: intent_rec_service/Dockerfile
+    container_name: intent_rec_service
+    ports:
+      - "5003:5000"
+    env_file:
+      - intent_rec_service/.env
+
+  disc_parameter_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: disc_parameter_service/Dockerfile
+    container_name: disc_parameter_service
+    ports:
+      - "5001:5000"
+    env_file:
+      - disc_parameter_service/.env
+
+  slotfilling_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: slotfilling_service/Dockerfile
+    container_name: slotfilling_service
+    ports:
+      - "5008:5000"
+    env_file:
+      - slotfilling_service/.env
+
+  questionimprovement_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: questionimp_service/Dockerfile
+    container_name: questionimp_service
+    ports:
+      - "5005:5000"
+    env_file:
+      - questionimp_service/.env
+
+  questiongen_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: questiongen_service/Dockerfile
+    container_name: questiongen_service
+    ports:
+      - "5007:5000"
+    env_file:
+      - questiongen_service/.env
+
+  service_selection_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: serviceselection_service/Dockerfile
+    container_name: service_selection_service
+    ports:
+      - "5006:5000"
+    env_file:
+      - serviceselection_service/.env
+
+  question_retrieval_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: question_retrieval_service/Dockerfile
+    container_name: question_retrieval_service
+    ports:
+      - "5004:5000"
+    env_file:
+      - question_retrieval_service/.env
+
+  opendomain_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: opendomain_service/Dockerfile
+    container_name: opendomain_service
+    ports:
+      - "5010:5000"
+    env_file:
+      - opendomain_service/.env
+
+  tagfilter_service:
+    <<: *default-service
+    build:
+      context: .
+      dockerfile: tagfilter_service/Dockerfile
+    container_name: tagfilter_service
+    ports:
+      - "5009:5000"
+    env_file:
+      - tagfilter_service/.env
+
+networks:
+  chatbot_network:
+    driver: bridge
